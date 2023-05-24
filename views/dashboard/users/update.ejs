@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+</head>
+<body>
+    <h1>Update User</h1>
+    
+    <a href="/dashboard/home">Back</a>
+
+    <form action="/form-dashboard/users/update" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="<%= user.username %>" readonly>
+
+        <br />
+        <br />
+
+        <!-- <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+
+        <br />
+        <br /> -->
+
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" value="<%= user.bio.first_name %>" required>
+
+        <br />
+        <br />
+
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" value="<%= user.bio.last_name %>" required>
+
+        <br />
+        <br />
+
+        <label for="address">Address</label>
+        <textarea name="address" id="address" cols="30" rows="10" required><%= user.bio.address %></textarea>
+
+        <br />
+        <br />
+
+        <label for="hobby">Hobby</label>
+        <input type="text" name="hobby" id="hobby" value="<%= user.bio.hobby %>" required>
+
+        <br />
+        <br />
+
+        <input type="hidden" name="user_id" value="<%= user.id %>">
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

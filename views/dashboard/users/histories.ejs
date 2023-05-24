@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histories</title>
+</head>
+<body>
+    <h1>Histories</h1>
+
+    <a href="/dashboard/home">Back</a>
+
+    <table>
+        <thead>
+            <th>Game ID</th>
+            <th>Game Name</th>
+            <th>Score</th>
+            <th>Played At</th>
+        </thead>
+        <tbody>
+            <% histories.forEach(history => { %>             
+                <tr>
+                    <td><%= history.game.id %></td>
+                    <td><%= history.game.name %></td>
+                    <td><%= history.score %></td>
+                    <td><%= history.played_at %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "tugas-ch6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sequelize:create_migration": "sequelize migration:generate --name",
+    "sequelize:migrate": "sequelize-cli db:migrate",
+    "sequelize:migrate:undo": "sequelize-cli db:migrate:undo"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "expres": "^0.0.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.0",
+    "sequelize": "^6.31.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.0"
+  }
+}

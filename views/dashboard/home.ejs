@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <% if (error == 'userNotFound') { %>
+        <p style="color: red;">ID Game yang kamu masukkan tidak ada</p>
+    <% } %>
+    <% if (error == 'gameNotFound') { %>
+        <p style="color: red;">ID Game yang kamu masukkan tidak ada</p>
+    <% } %>
+    <h1>Home</h1>
+
+    <h3>Users</h3>
+    <a href="/dashboard/users/create">New User</a>
+
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Full Name</th>
+            <th>Hobby</th>
+            <th>Address</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <% users.forEach((user) => { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.role %></td>
+                    <td><%= user.bio.first_name %> <%= user.bio.last_name %></td>
+                    <td><%= user.bio.hobby %></td>
+                    <td><%= user.bio.address %></td>
+                    <td>
+                        <% if (user.role === 'PLAYER') { %>
+                            <a href="/dashboard/users/<%= user.id %>/histories">Histories</a>
+                            <a href="/dashboard/users/<%= user.id %>/update">Edit</a>
+                            <a href="/dashboard/users/<%= user.id %>/delete">Delete</a>
+                        <% } %>                     
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <h3>User New Game</h3>
+
+    <form action="/form-dashboard/users/new-game" method="post">
+        <label for="user_id">User ID</label>
+        <!-- <input type="text" name="user_id" id="user_id"> -->
+        
+        <select name="user_id" id="user_id">
+            <% users.forEach(user => { %>
+                <% if (user.role === 'PLAYER') { %>
+                    <option value="<%= user.id %>"><%= user.username %></option>
+                <% } %>
+            <% }) %>        
+        </select>
+
+        <br/>
+        <br/>
+
+        <label for="game_id">Game ID</label>
+        <select name="game_id" id="game_id">
+            <% games.forEach(game => { %>
+                <option value="<%= game.id %>"><%= game.name %></option>   
+            <% }) %>          
+        </select>
+
+        <br/>
+        <br/>
+
+        <label for="score">Score</label>
+        <input type="number" name="score" id="score" min="1" max="100">
+
+        <br/>
+        <br/>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
