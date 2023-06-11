@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const { User, UserGameHistory, Game } = require('../../database/models');
 const { UserBio } = require('../../database/models');
@@ -13,12 +14,18 @@ userRouter.post('/form-dashboard/users/login', async function(req, res) {
     const user = await User.findOne({
         where: {
             username: username,
-            password: password,
             role: 'ADMIN',
         },
     });
 
     if (!user) {
+        res.redirect('/dashboard/login');
+
+        return;
+    }
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    if (!isPasswordValid) {
         res.redirect('/dashboard/login');
 
         return;
@@ -237,7 +244,7 @@ userRouter.post('/api/v1/users', async function(req, res) {
 
     const created = await User.create({
         username,
-        password,
+        password: bcrypt.hashSync(password),
         role: 'PLAYER',
     });
 
