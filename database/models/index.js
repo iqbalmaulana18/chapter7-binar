@@ -8,6 +8,8 @@ const sequelize = new Sequelize(
 
 // import all models
 const Game = require('./Game')(sequelize);
+const Player = require('./Player')(sequelize);
+const Room = require('./Room')(sequelize);
 const User = require('./User')(sequelize);
 const UserBio = require('./UserBio')(sequelize);
 const UserGameHistory = require('./UserGameHistory')(sequelize);
@@ -35,6 +37,8 @@ UserGameHistory.hasOne(Game, {
 
 module.exports = {
     Game,
+    Player,
+    Room,
     User,
     UserBio,
     UserGameHistory,

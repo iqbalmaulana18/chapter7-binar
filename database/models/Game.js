@@ -15,6 +15,9 @@ function GameModel(sequelize){
         description: {
             type: DataTypes.STRING
         },
+        score: {
+            type: DataTypes.INTEGER
+        },
     }, {
         sequelize,
         tableName: 'games',
