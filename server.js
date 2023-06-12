@@ -4,6 +4,7 @@ const express = require('express');
 
 const dashboardRouter = require('./domains/dashboard/routes');
 const gameRouter = require('./domains/games/routes');
+const playerRouter = require('./domains/players/routes');
 const roomRouter = require('./domains/rooms/routes')
 const userRouter = require('./domains/users/routes');
 
@@ -20,6 +21,7 @@ app.use('/static', express.static('public/static'));
 
 app.use(dashboardRouter);
 app.use(gameRouter);
+app.use(playerRouter);
 app.use(roomRouter);
 app.use(userRouter);
 

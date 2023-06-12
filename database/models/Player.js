@@ -32,7 +32,7 @@ function PlayerModel(sequelize) {
         },
     }, {
         sequelize,
-        tableName: 'player',
+        tableName: 'players',
         timestamps: false,
     });
 

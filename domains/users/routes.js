@@ -192,7 +192,7 @@ userRouter.post('/api/v1/users/login', async function(req, res) {
         iss: 'chapter7',
         aud: aud || 'restful',
     }, JWT_SECRET, {
-        expiresIn: '1m',
+        expiresIn: '1h',
     });
 
     res.json(res.json({
