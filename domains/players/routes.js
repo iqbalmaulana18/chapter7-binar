@@ -11,20 +11,21 @@ function rpsGetWinner(players) {
     let draw = false;
 
     const [pl1, pl2] = players;
-    if (pl1.data === 'R' && pl2.data === 'P') {
-        winner = pl2.player_id;
-    } else if (pl1.data === 'R' && pl2.data === 'S') {
-        winner = pl1.player_id;
-    } else if (pl1.data === 'P' && pl2.data === 'R') {
-        winner = pl1.player_id;
-    } else if (pl1.data === 'P' && pl2.data === 'S') {
-        winner = pl2.player_id
-    } else if (pl1.data === 'S' && pl2.data === 'P') {
-        winner = pl1.player_id;
-    } else if (pl1.data === 'S' && pl2.data === 'R') {
-        winner = pl2.player_id;
-    } else {
+    
+    if (pl1.data === pl2.data) {
         draw = true;
+    } else if (pl1.data === 'R') {
+        (pl2.data === 'P')
+            ? winner = pl2.player_id 
+            : winner = pl1.player_id;
+    } else if (pl1.data === 'P') {
+        (pl2.data === 'S')
+            ? winner = pl2.player_id
+            : winner = pl1.player_id
+    } else if (pl1.data === 'S') {
+        (pl2.data === 'R')
+            ? winner = pl2.player_id
+            : winner = pl1.player_id
     }
 
     return { winner, draw };
