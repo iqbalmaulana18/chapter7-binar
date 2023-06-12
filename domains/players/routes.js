@@ -4,7 +4,6 @@ const { Player, Room, Game, User } = require('../../database/models');
 
 const playerRouter = express.Router();
 
-const RPS_MAX_PLAYER = 2;
 const RPS = 1;
 
 function rpsGetWinner(players) {
@@ -29,6 +28,28 @@ function rpsGetWinner(players) {
     }
 
     return { winner, draw };
+}
+
+async function rpsHandle(players, game, userId) {
+    const { winner, draw } = rpsGetWinner(players);
+
+        const userWinner = await User.findOne({
+            attributes: ['id', 'username'],
+            where: {
+                id: winner,
+            },
+        });
+
+        return {
+            message: 'game ended',
+            result: {
+                winner: userWinner,
+                draw: draw,
+                status: winner === req.user.id ? 'congrats, you are the winner' : 'sorry, you are lost',
+                score: game.score,
+            },
+            error: 'room not found',
+        };
 }
 
 // endpoint untuk create room
@@ -64,26 +85,9 @@ playerRouter.post('/api/v1/players/fight/:roomId', authentication, async functio
         },
     });
 
-    if (game.id === RPS && players.length === RPS_MAX_PLAYER) {
-        const { winner, draw } = rpsGetWinner(players);
-
-        const userWinner = await User.findOne({
-            attributes: ['id', 'username'],
-            where: {
-                id: winner,
-            },
-        });
-
-        res.json({
-            message: 'game ended',
-            result: {
-                winner: userWinner,
-                draw: draw,
-                status: winner === req.user.id ? 'congrats, you are the winner' : 'sorry, you are lost',
-                score: game.score,
-            },
-            error: 'room not found',
-        });
+    if (game.id === RPS && players.length === game.max_player) {
+        const result = await rpsHandle(players, game, req.user.id);
+        res.json(result);
 
         return;
     }
