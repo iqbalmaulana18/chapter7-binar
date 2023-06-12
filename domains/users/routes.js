@@ -168,7 +168,7 @@ userRouter.post('/api/v1/users/login', async function(req, res) {
 
     if (!user) {
         res.json({
-            message: 'invalid user or password',
+            message: 'failed',
             result: null,
             error: 'invalid username or password',
         });
@@ -189,7 +189,7 @@ userRouter.post('/api/v1/users/login', async function(req, res) {
 
     const token = jwt.sign({
         sub: String(user.id),
-        iss: 'game-app-binar',
+        iss: 'chapter7',
         aud: aud || 'restful',
     }, JWT_SECRET, {
         expiresIn: '1m',
