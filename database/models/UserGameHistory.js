@@ -34,6 +34,15 @@ function UserGameHistoryModel (sequelize) {
         played_at: {
             type: DataTypes.DATE,
         },
+        room_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: {
+                    tableName: 'rooms',
+                },
+                key: 'id'
+            },
+        },
     }, {
         sequelize,
         tableName: 'user_game_histories',

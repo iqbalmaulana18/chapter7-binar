@@ -195,13 +195,13 @@ userRouter.post('/api/v1/users/login', async function(req, res) {
         expiresIn: '1h',
     });
 
-    res.json(res.json({
+    res.json({
         message: 'success login',
         result: {
             token: token,
         },
         error: null,
-    }));
+    });
 });
 
 // GET: /api/v1/users : list data user

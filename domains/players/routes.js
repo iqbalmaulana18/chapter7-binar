@@ -1,6 +1,6 @@
 const express = require('express');
 const authentication = require('../../middlewares/authentication');
-const { Player, Room, Game, User } = require('../../database/models');
+const { Player, Room, Game, User, UserGameHistory } = require('../../database/models');
 
 const playerRouter = express.Router();
 
@@ -46,7 +46,9 @@ async function rpsHandle(players, game, userId) {
             result: {
                 winner: userWinner,
                 draw: draw,
-                status: winner === req.user.id ? 'congrats, you are the winner' : 'sorry, you are lost',
+                status: winner === userId 
+                ? "congrats, you are the winner"
+                : "sorry, you are lost",
                 score: game.score,
             },
             error: 'room not found',
@@ -88,6 +90,22 @@ playerRouter.post('/api/v1/players/fight/:roomId', authentication, async functio
 
     if (game.id === RPS && players.length === game.max_player) {
         const result = await rpsHandle(players, game, req.user.id);
+        const history = await UserGameHistory.findOne({
+            where: {
+                room_id: Number(roomId)
+            },
+        });
+
+        if (!history) {
+            await UserGameHistory.create({
+                user_id: result.result.winner.id,
+                game_id: game.id,
+                score: result.result.score,
+                played_at: new Date(),
+                room_id: Number(roomId),
+            });
+        }
+
         res.json(result);
 
         return;
